@@ -22,3 +22,13 @@ export const CheckDateIsHolidaySchema = z.object({
       message: "Invalid date",
     }),
 });
+
+export const UpcomingHolidaysSchema = z.object({
+  days: z
+    .string()
+    .optional()
+    .default("30")
+    .transform((val) => parseInt(val, 10))
+    .pipe(z.number().min(1).max(365)),
+  lang: z.enum(["pt", "en"]).default("pt"),
+});
