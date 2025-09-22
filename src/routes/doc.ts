@@ -4,14 +4,13 @@ export function registerAPIDoc(app: Hono) {
   app.get("/", (c) => {
     return c.json({
       name: "Angola Holidays API",
-      version: "1.0.0",
+      version: "0.0.1",
       description:
         "API para consultar feriados nacionais de Angola | API to query Angola's national holidays",
-      documentation:
-        "https://github.com/your-username/angola-holidays-api#readme",
-      source: "https://github.com/your-username/angola-holidays-api",
+      documentation: "https://github.com/nangazaki/angola-holidays#readme",
+      source: "https://github.com/nangazaki/angola-holidays",
       license: "MIT",
-      author: "Your Name",
+      author: "Nangazaki",
       endpoints: [
         {
           path: "/health",

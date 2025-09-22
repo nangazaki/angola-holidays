@@ -1,9 +1,9 @@
 import type { Hono } from "hono";
-import { getRequestLang } from "../src/middleware/get-request-lang.js";
-import { UpcomingHolidaysSchema } from "../src/schemas/index.js";
-import { createResponse } from "../src/helpers/response.js";
-import { getLocalizedMessage } from "../src/helpers/messages.js";
-import { HolidaysService } from "../src/services/index.js";
+import { getRequestLang } from "../middleware/get-request-lang.js";
+import { UpcomingHolidaysSchema } from "../schemas/index.js";
+import { createResponse } from "../helpers/response.js";
+import { getLocalizedMessage } from "../helpers/messages.js";
+import { HolidaysService } from "../services/index.js";
 
 export function registerUpcomingRoutes(app: Hono) {
   app.get("/upcoming", (c) => {
