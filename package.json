@@ -13,6 +13,7 @@
   "packageManager": "pnpm@10.12.1",
   "dependencies": {
     "hono": "^4.9.4",
+    "hono-rate-limiter": "^0.4.2",
     "zod": "^4.1.4"
   },
   "devDependencies": {
