@@ -54,7 +54,10 @@ export function registerHolidayRoutes(app: Hono) {
       );
     }
 
-    const parsed = GetHolidaysByRange.safeParse({ qStart, qEnd });
+    const parsed = GetHolidaysByRange.safeParse({
+      startDate: qStart,
+      endDate: qEnd,
+    });
     if (!parsed.success) {
       return c.json(
         createResponse(
