@@ -38,8 +38,8 @@ export function registerHolidayRoutes(app: Hono) {
 
   app.get("/holidays-by-range", (c) => {
     const lang = getRequestLang(c);
-    const qStart = c.req.query("start-date");
-    const qEnd = c.req.query("end-date");
+    const qStart = c.req.query("startDate");
+    const qEnd = c.req.query("endDate");
 
     if (!qStart || !qEnd) {
       return c.json(
