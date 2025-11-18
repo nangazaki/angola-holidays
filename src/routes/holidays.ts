@@ -76,9 +76,9 @@ export function registerHolidayRoutes(app: Hono) {
 
     const { startDate, endDate } = parsed.data;
     const service = new HolidaysService(lang as Language);
-    const result = service.getByRange(startDate, endDate);
+    const holidays = service.getByRange(startDate, endDate);
 
-    return c.json(createResponse("success", { ...result }));
+    return c.json(createResponse("success", holidays));
   });
 
   app.get("/holidays/check", (c) => {
