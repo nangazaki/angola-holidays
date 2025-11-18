@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vercel dev",
+    "start:dev": "npx ts-node ./src/index.ts",
     "build": "tsc",
     "deploy": "vercel --prod",
     "type-check": "tsc --noEmit",

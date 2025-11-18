@@ -17,6 +17,30 @@ export class HolidaysService {
     return formatResponse(this.holidays, this.lang);
   }
 
+  getByRange(startDate: Date, endDate: Date) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (start > end) {
+      throw new Error("A data inicial deve ser anterior à data final");
+    }
+
+    const startYear = start.getFullYear();
+    const endYear = end.getFullYear();
+    const allHolidays: any[] = [];
+
+    for (let year = startYear; year <= endYear; year++) {
+      allHolidays.push(...getAllHolidaysByYear(year));
+    }
+
+    const holidaysInRange = allHolidays.filter((holiday) => {
+      const hDate = new Date(holiday.date);
+      return hDate >= start && hDate <= end;
+    });
+
+    return formatResponse(holidaysInRange, this.lang);
+  }
+
   isHoliday(date: Date) {
     this.setHolidays(date.getFullYear());
 

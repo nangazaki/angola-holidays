@@ -12,6 +12,28 @@ export const GetHolidaysSchema = z.object({
     }),
 });
 
+export const GetHolidaysByRange = z
+  .object({
+    startDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (expected YYYY-MM-DD)")
+      .transform((value) => new Date(value))
+      .refine((value) => !isNaN(value.getTime()), {
+        message: "Invalid date",
+      }),
+    endDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (expected YYYY-MM-DD)")
+      .transform((value) => new Date(value))
+      .refine((value) => !isNaN(value.getTime()), {
+        message: "Invalid date",
+      }),
+  })
+  .refine((data) => data.startDate <= data.endDate, {
+    message: "Start date must be before or equal to end date",
+    path: ["endDate"],
+  });
+
 export const CheckDateIsHolidaySchema = z.object({
   lang: z.enum(["pt", "en"]).optional().default("pt"),
   date: z

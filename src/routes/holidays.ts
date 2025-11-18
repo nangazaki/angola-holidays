@@ -2,6 +2,7 @@ import type { Hono } from "hono";
 import { getRequestLang } from "../middleware/get-request-lang.js";
 import {
   CheckDateIsHolidaySchema,
+  GetHolidaysByRange,
   GetHolidaysSchema,
 } from "../schemas/index.js";
 import { createResponse } from "../helpers/response.js";
@@ -33,6 +34,48 @@ export function registerHolidayRoutes(app: Hono) {
     return c.json(
       createResponse("success", { year, count: holidays.length, holidays })
     );
+  });
+
+  app.get("/holidays-by-range", (c) => {
+    const lang = getRequestLang(c);
+    const qStart = c.req.query("start-date");
+    const qEnd = c.req.query("end-date");
+
+    if (!qStart || !qEnd) {
+      return c.json(
+        createResponse(
+          "error",
+          {
+            errors: "d",
+          },
+          getLocalizedMessage(lang, "invalidDate")
+        ),
+        400
+      );
+    }
+
+    const parsed = GetHolidaysByRange.safeParse({ qStart, qEnd });
+    if (!parsed.success) {
+      return c.json(
+        createResponse(
+          "error",
+          {
+            errors: parsed.error?.issues.map((issue: any) => ({
+              field: issue.path.join("."),
+              message: issue.message,
+            })),
+          },
+          getLocalizedMessage(lang, "invalidDate")
+        ),
+        400
+      );
+    }
+
+    const { startDate, endDate } = parsed.data;
+    const service = new HolidaysService(lang as Language);
+    const result = service.getByRange(startDate, endDate);
+
+    return c.json(createResponse("success", { ...result }));
   });
 
   app.get("/holidays/check", (c) => {
